@@ -7,29 +7,42 @@ function getAllCV():Promise<ICvModel[]> {
     return CvModel.find().exec();
 }
 
+//use??
 async function getOneCV(_id:string):Promise<ICvModel> {
+    //find specific CV
     const CV = CvModel.findById(_id).exec();
+    //If CV not exists, return error
     if(!CV) throw new ResourceNotFoundError(_id);
+    //If exists return CV
     return CV;
 }
 
 // Add new cv:
 async function addCV(cv: ICvModel): Promise<ICvModel> {
-    cv.fileName = await fileHandler.saveFile(cv.fileContent);
+    
     // Validate: 
     const errors = cv.validateSync();
     if (errors) throw new ValidationError(errors.message);
-    // Save:
+
+    //Save the file to disk and get a unique name for the file
+    cv.fileName = await fileHandler.saveFile(cv.fileContent);
+
+    //save to the DB
+    const newCV = cv.save();
+
+    // read and grade a file :
     fileHandler.readFile(cv._id, cv.fileName)
-    return cv.save();
+
+    return newCV;
 }
 
-// Update existing product:
+// Update cv score:
 async function updateCV(_id:string, score:number): Promise<ICvModel> {
 
-    // Validate: 
-    // const errors = cv.validateSync();
-    // if (errors) throw new ValidationError(errors.message);
+    // Validate:
+    if(score<0){
+        throw new ValidationError("minimum score is 0");
+    } 
 
     // Update: 
     const filter = {_id : _id};
@@ -46,12 +59,16 @@ async function updateCV(_id:string, score:number): Promise<ICvModel> {
 
 // Delete existing CV:
 async function deleteCV(_id: string): Promise<void> {
+
     const deletedCV = await CvModel.findByIdAndDelete(_id).exec();
+    //if the _id not exists -> error
     if (!deletedCV) throw new ResourceNotFoundError(_id);
 }
 
+//Delete a file based on the date it was received
 async function findDelete(date:string):Promise<void>{
-    const oldCV =await CvModel.find({"receiveDate":{$lte:date}}).deleteMany().exec();
+
+    await CvModel.find({"receiveDate":{$lte:date}}).deleteMany().exec();
 }
 
 export default {

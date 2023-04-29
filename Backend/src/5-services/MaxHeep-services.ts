@@ -33,14 +33,15 @@ export class MaxHeep{
           }
     }
 
+    //runTime 0(logn)
     public heapExtractMax(){
-        if(this.myHeap.length<1){
+        if(this.myHeap.length < 1){
             return "heap underflow"
-        }
+        }else{
         const max = this.myHeap[0];
         this.myHeap[0] = this.myHeap[this.myHeap.length-1]
-        this.maxHeapify(1)
-        return max
+        this.maxHeapify(0)
+        return max}
     }
 
 

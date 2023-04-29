@@ -1,10 +1,11 @@
+import verifyLoggedIn from '../3-middleware/verify-logged-in';
 import scanService from '../5-services/scan -service';
 import {myKnowledge } from './../4-models/knowledge-model';
 import express, { Request, Response, NextFunction } from "express";
 
 const routerScan = express.Router(); 
 
-routerScan.post("", async (request: Request, response: Response, next: NextFunction) => {
+routerScan.post("", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const newListKnowledge = request.body;
         const newScan =await scanService.getNewScan(newListKnowledge);
@@ -16,15 +17,15 @@ routerScan.post("", async (request: Request, response: Response, next: NextFunct
     }
 });
 
-// routerScan.get("/max", async (request: Request, response: Response, next: NextFunction) => {
-//     try {
-//         const _id = request.params._id;
-//         const CV =await cvService.getOneCV(_id);
-//         response.json(CV);
-//     }
-//     catch (err: any) {
-//         next(err);
-//     }
-// });
+routerScan.get("/max", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const max = await scanService.getMax();
+        console.log(max);
+        response.json(max);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
 
 export default routerScan;

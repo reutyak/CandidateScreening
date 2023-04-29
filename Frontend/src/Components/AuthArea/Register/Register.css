@@ -1,0 +1,18 @@
+.Register label {
+	margin-top: 2%;
+}
+
+.Register >form> label, .Register>input,  .Register>form>button {
+    display: block;
+}
+.Register>form>button{
+	margin-left: 45%;
+	margin-top: 2%;
+}
+
+.Register>form>span{
+	display: block;
+color: red;
+font-weight: 300;
+font-size: small;
+}

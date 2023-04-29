@@ -4,6 +4,9 @@ import "./DataList.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ScanService from "../../../Services/scan-Service";
+import axios from "axios";
+import { store } from "../../../redux/store";
+axios.defaults.headers.common['Authorization'] = `Bearer ${store.getState().AuthState.token}`;
 
 function DataList(): JSX.Element {
 

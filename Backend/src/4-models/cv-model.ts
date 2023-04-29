@@ -12,21 +12,17 @@ export interface ICvModel extends Document {
 export const CvSchema = new Schema<ICvModel>({
     fileName: {
         type: String,
-        required: [true, "missing file name"],
         minlength: [2, "File name must be minimum 2 chars"],
-        // maxlength: [10, "File name must be maximum 10 chars"],
         trim: true,
         unique: true
     },
     fileContent:{
         type: Object,
-        required: [true, "missing file content"],
-        // minlength: [10, "File content must be minimum 10 chars"],
-        // maxlength: [15000, "File content must be maximum 15000 chars"],
-        // trim: true
+        required: [true, "missing file"]
     },
     score: {
-        type: Number
+        type: Number,
+        // min:[0,"minimum score is 0"]
     },
     receiveDate: {
         type: Date,

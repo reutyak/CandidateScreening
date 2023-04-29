@@ -7,15 +7,14 @@ function Layout(): JSX.Element {
     return (
         <div className="Layout">
 
-            <nav>
-                <Menu />
-            </nav>
-
-            <hr />
+            
 
             <header>
                 <Header />
             </header>
+            <nav>
+                <Menu />
+            </nav>
 
             <main>
                 <Routing />
