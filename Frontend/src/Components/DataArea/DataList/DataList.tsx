@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import {  KnowledgeModel } from "../../../Models/knowledge-model";
+import {  SkillsModel } from "../../../Models/skills-Model";
 import "./DataList.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -10,7 +10,7 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${store.getState().Auth
 
 function DataList(): JSX.Element {
 
-    const {register, handleSubmit} = useForm<KnowledgeModel>();
+    const {register, handleSubmit} = useForm<SkillsModel>();
     const navigate = useNavigate();
 
     
@@ -20,7 +20,7 @@ function DataList(): JSX.Element {
         NiceToHave = "Nice To Have",
         NotNecessary = "Not Necessary",
       }
-    enum Knowledge {
+    enum Skills {
       java ="java",
       python ="python",
       c ="c",
@@ -41,7 +41,7 @@ function DataList(): JSX.Element {
       Bsc ="Bsc"
     }
 
-    async function send(knowledge:KnowledgeModel) {
+    async function send(knowledge:SkillsModel) {
         try{
             await ScanService.newScan(knowledge)
             navigate("/home")
@@ -51,8 +51,8 @@ function DataList(): JSX.Element {
     return (
         <div className="DataList">
 <form className="knowledge" onSubmit={handleSubmit(send)}>
-            {Object.values(Knowledge).map((item)=>{
-          console.log(Object.keys(Knowledge))
+            {Object.values(Skills).map((item)=>{
+          console.log(Object.keys(Skills))
           return <><div className="select"><div>{item}</div><select {...register(item)} >
             <option key={item+Level.Must} value={100000}>{Level.Must}</option>
             <option key={item+Level.Important} value={500}>{Level.Important}</option>

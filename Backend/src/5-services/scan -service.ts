@@ -1,6 +1,6 @@
 import { ICvModel } from './../4-models/cv-model';
 import fileHandler from '../2-utils/file-handler';
-import { myKnowledge } from '../4-models/knowledge-model';
+import { mySkills } from '../4-models/skills-model';
 import { MaxHeep } from './MaxHeep-services';
 import cvService from './cv-service';
 import fsPromises from "fs/promises";
@@ -16,26 +16,26 @@ async function setScoreCV():Promise<void>{
     myCV.map( item => fileHandler.readFile(item._id, item.fileName));
 }
 
-//get new knowledge list
-async function getNewScan(listKnowledge:typeof myKnowledge){
-    myKnowledge.Bsc = listKnowledge.Bsc;
-    myKnowledge.HTML = listKnowledge.HTML;
-    myKnowledge.QA = listKnowledge.QA;
-    myKnowledge.algorithm = listKnowledge.algorithm;
-    myKnowledge.analyst = listKnowledge.analyst;
-    myKnowledge.angular = listKnowledge.angular;
-    myKnowledge.c = listKnowledge.c;
-    myKnowledge.css = listKnowledge.css;
-    myKnowledge.deep_learning = listKnowledge.deep_learning;
-    myKnowledge.devops = listKnowledge.devops;
-    myKnowledge.frontend = listKnowledge.frontend;
-    myKnowledge.java = listKnowledge.java;
-    myKnowledge.net = listKnowledge.net;
-    myKnowledge.node = listKnowledge.node;
-    myKnowledge.python = listKnowledge.python;
-    myKnowledge.react = listKnowledge.react;
-    myKnowledge.science = listKnowledge.science;
-    myKnowledge.typeScript = listKnowledge.typeScript;
+//get new skills list
+async function getNewScan(listSkills:typeof mySkills){
+    mySkills.Bsc = listSkills.Bsc;
+    mySkills.HTML = listSkills.HTML;
+    mySkills.QA = listSkills.QA;
+    mySkills.algorithm = listSkills.algorithm;
+    mySkills.analyst = listSkills.analyst;
+    mySkills.angular = listSkills.angular;
+    mySkills.c = listSkills.c;
+    mySkills.css = listSkills.css;
+    mySkills.deep_learning = listSkills.deep_learning;
+    mySkills.devops = listSkills.devops;
+    mySkills.frontend = listSkills.frontend;
+    mySkills.java = listSkills.java;
+    mySkills.net = listSkills.net;
+    mySkills.node = listSkills.node;
+    mySkills.python = listSkills.python;
+    mySkills.react = listSkills.react;
+    mySkills.science = listSkills.science;
+    mySkills.typeScript = listSkills.typeScript;
     //update score 
     await setScoreCV();
     cvUsed = [];

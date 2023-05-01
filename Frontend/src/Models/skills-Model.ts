@@ -1,4 +1,4 @@
-class Knowledge {
+export abstract class SkillsModel {
   public constructor(
     public java: number,
     public python: number,
@@ -21,4 +21,3 @@ class Knowledge {
   ) {}
 }
 
-export const myKnowledge = new Knowledge(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);

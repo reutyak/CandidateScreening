@@ -1,12 +1,12 @@
 import { UploadedFile } from "express-fileupload";
 import { v4 as uuid } from "uuid";
 import fsPromises from "fs/promises";
-import { myKnowledge } from "../4-models/knowledge-model";
+import { mySkills } from "../4-models/skills-model";
 import cvService from "../5-services/cv-service";
 import scanService from "../5-services/scan -service";
 
 const cvFilesFolder = "./src/1-assets/files/cv/";
-enum Knowledge {
+enum Skills {
   java = "java",
   python = "python",
   c = "c",
@@ -89,16 +89,16 @@ async function readFile(_id: string, uniqueFileName: string): Promise<void> {
     cvFilesFolder + uniqueFileName,
     "utf-8"
   );
-  console.log(myKnowledge);
+  console.log(mySkills);
   //Initialization variable to 0 to score the file
   let count = 0;
   //checks for each value if exists in the file,
   //If exists, add to the count according to the importance level of the value.
   //and update score in the DB
-  Object.values(Knowledge).map((item) => {
+  Object.values(Skills).map((item) => {
     const option = [item, item.toLocaleLowerCase(), item.toLocaleUpperCase(), (item[0].toLocaleUpperCase()+item.slice(1,item.length-1).toLocaleLowerCase())];
-    // if (content.includes(item || item.toLocaleLowerCase() || item.toLocaleUpperCase() || (item[0].toLocaleUpperCase()+item.slice(1,item.length-1).toLocaleLowerCase()))) count += +myKnowledge[item];
-    if (option.some(i => content.includes(i))) count += +myKnowledge[item];
+    // if (content.includes(item || item.toLocaleLowerCase() || item.toLocaleUpperCase() || (item[0].toLocaleUpperCase()+item.slice(1,item.length-1).toLocaleLowerCase()))) count += +mySkills[item];
+    if (option.some(i => content.includes(i))) count += +mySkills[item];
     console.log(count);
     // await cvService.updateCV(_id, count);
   });
