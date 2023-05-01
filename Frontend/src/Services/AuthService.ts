@@ -20,6 +20,7 @@ class AuthService {
         console.log(token);
 
         // Send token to global state:
+        localStorage.setItem("token", token);
         store.dispatch({ type: AuthActionType.Register, payload: token });
     }
 
@@ -34,6 +35,7 @@ class AuthService {
         console.log(token);
 
         // Send token to global state:
+        localStorage.setItem("token", token);
         store.dispatch({ type: AuthActionType.Login, payload: token });
     }
 

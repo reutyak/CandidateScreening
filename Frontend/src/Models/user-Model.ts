@@ -28,7 +28,7 @@ public static usernameValidation: RegisterOptions = {
 };
 
 public static passwordValidation: RegisterOptions = {
-  required: { value: true, message: "Missing name"},
+  required: { value: true, message: "Missing password"},
   minLength: { value: 8, message: "Password must be 8 chars"},
   maxLength: { value: 8, message: "Password must be 8 chars"}
 };

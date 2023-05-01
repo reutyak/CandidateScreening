@@ -12,6 +12,8 @@ function DataList(): JSX.Element {
 
     const {register, handleSubmit} = useForm<KnowledgeModel>();
     const navigate = useNavigate();
+
+    
     enum Level {
         Must = "Must",
         Important = "Important",
@@ -51,12 +53,12 @@ function DataList(): JSX.Element {
 <form className="knowledge" onSubmit={handleSubmit(send)}>
             {Object.values(Knowledge).map((item)=>{
           console.log(Object.keys(Knowledge))
-          return <><div>{item}</div><select {...register(item)} >
+          return <><div className="select"><div>{item}</div><select {...register(item)} >
             <option key={item+Level.Must} value={100000}>{Level.Must}</option>
             <option key={item+Level.Important} value={500}>{Level.Important}</option>
             <option key={item+Level.NiceToHave} value={10}>{Level.NiceToHave}</option>
             <option selected key={item+Level.NotNecessary} value={1}>{Level.NotNecessary}</option>
-          </select></>
+          </select></div></>
         })}
             
             

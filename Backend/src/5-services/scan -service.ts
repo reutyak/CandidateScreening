@@ -4,21 +4,20 @@ import { myKnowledge } from '../4-models/knowledge-model';
 import { MaxHeep } from './MaxHeep-services';
 import cvService from './cv-service';
 import fsPromises from "fs/promises";
+import { ValidationError } from '../4-models/client-errors';
 
 const cvFilesFolder = "./src/1-assets/files/cv/";
+let cvUsed = [];
 
-async function setScoreCV(){
+async function setScoreCV():Promise<void>{
     //get all CV
     const myCV =await cvService.getAllCV();
     //update the score of the cv files according to the new knowledge list
-    myCV.map(item=>fileHandler.readFile(item._id, item.fileName));
-    // const myUpdateCV =await cvService.getAllCV();
-    // global.currentMaxHeap = new MaxHeep(myUpdateCV);
-    // global.currentMaxHeap.buildMaxHeap();
+    myCV.map( item => fileHandler.readFile(item._id, item.fileName));
 }
 
 //get new knowledge list
-function getNewScan(listKnowledge:typeof myKnowledge){
+async function getNewScan(listKnowledge:typeof myKnowledge){
     myKnowledge.Bsc = listKnowledge.Bsc;
     myKnowledge.HTML = listKnowledge.HTML;
     myKnowledge.QA = listKnowledge.QA;
@@ -37,39 +36,44 @@ function getNewScan(listKnowledge:typeof myKnowledge){
     myKnowledge.react = listKnowledge.react;
     myKnowledge.science = listKnowledge.science;
     myKnowledge.typeScript = listKnowledge.typeScript;
-    //update score and build max heap
-    setScoreCV().then(()=>{buildHeap(buildMax)});
-    return myKnowledge
+    //update score 
+    await setScoreCV();
+    cvUsed = [];
+    //build max heap after the setScore finish - I have to do it better not with setimeout
+    setTimeout(()=>buildHeap(),4000);
 }
 
-async function buildHeap(callBack:any){
-    // const myUpdateCV = await cvService.getAllCV();
-    // console.log(myUpdateCV);
-    const currentHeap = new MaxHeep(await cvService.getAllCV());
-    callBack(currentHeap);
-    // await global.currentMaxHeap.buildMaxHeap();
+async function buildHeap(){
+    const myUpdateCV = (await cvService.getAllCV()).filter(cv => !cvUsed.includes(cv._id));
+    global.currentMaxHeap = new MaxHeep(myUpdateCV);
+    return global.currentMaxHeap
 }
-
-// function buildMax(){
-//     buildHeap((heap)=>heap.buildMaxHeap())
-// }
-
-function buildMax(heap:MaxHeep){
-    const maxHeap = heap.buildMaxHeap();
-    return maxHeap
-}
-
 
 async function getMax(){
-    // const currentMax = await global.currentMaxHeap;
+    if(!global.currentMaxHeap){
+        throw new ValidationError("Required skills must be set in the scan tab")
+    }
+    if(global.currentMaxHeap.length<1){
+        throw new ValidationError("empty heap")
+    }
+    //get the maxHeap[0]
     const theMax = await global.currentMaxHeap.heapExtractMax()
     console.log(theMax);
+    cvUsed.push(theMax._id);
+    console.log(cvUsed);
+    //get the content of the file
     const content = await fsPromises.readFile(cvFilesFolder+theMax.fileName,"utf-8")
-    console.log(content)
     return content
+    }
+
+//add new cv to the maxHeap
+async function addCVToThisScan(newCV:ICvModel){
+    global.currentMaxHeap && await global.currentMaxHeap.maxHeapInsert(newCV);
 }
 
 export default{
     getNewScan,
-    getMax
+    getMax,
+    buildHeap,
+    addCVToThisScan
 }

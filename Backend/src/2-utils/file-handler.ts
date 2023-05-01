@@ -89,16 +89,20 @@ async function readFile(_id: string, uniqueFileName: string): Promise<void> {
     cvFilesFolder + uniqueFileName,
     "utf-8"
   );
+  console.log(myKnowledge);
   //Initialization variable to 0 to score the file
   let count = 0;
   //checks for each value if exists in the file,
   //If exists, add to the count according to the importance level of the value.
   //and update score in the DB
-  Object.values(Knowledge).map(async (item) => {
-    if (content.includes(item)) count += +myKnowledge[item];
+  Object.values(Knowledge).map((item) => {
+    const option = [item, item.toLocaleLowerCase(), item.toLocaleUpperCase(), (item[0].toLocaleUpperCase()+item.slice(1,item.length-1).toLocaleLowerCase())];
+    // if (content.includes(item || item.toLocaleLowerCase() || item.toLocaleUpperCase() || (item[0].toLocaleUpperCase()+item.slice(1,item.length-1).toLocaleLowerCase()))) count += +myKnowledge[item];
+    if (option.some(i => content.includes(i))) count += +myKnowledge[item];
     console.log(count);
-    await cvService.updateCV(_id, count);
+    // await cvService.updateCV(_id, count);
   });
+  await cvService.updateCV(_id, count);
 }
 
 export default {

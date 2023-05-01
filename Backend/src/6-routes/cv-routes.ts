@@ -3,6 +3,7 @@ import cvService from "../5-services/cv-service";
 import { CvModel } from "../4-models/cv-model";
 import verifyLoggedIn from "../3-middleware/verify-logged-in";
 import { ResourceNotFoundError } from "../4-models/client-errors";
+import scanService from "../5-services/scan -service";
 
 const router = express.Router(); 
 
@@ -70,6 +71,7 @@ router.delete("/cv/test/:date", verifyLoggedIn, async (request: Request, respons
     try {
         const date = request.params.date;
         await cvService.findDelete(date);
+        await scanService.buildHeap();
         response.sendStatus(204);
     }
     catch (err: any) {

@@ -8,6 +8,7 @@ import dataRoutes from "./6-routes/cv-routes";
 import routerScan from "./6-routes/scan-router";
 import dal from "./2-utils/dal";
 import expressFileUpload from "express-fileupload";
+import routerUser from "./6-routes/users-routes";
 
 const server = express();
 
@@ -17,6 +18,7 @@ server.use(expressFileUpload()); // Creates request.files object containing file
 server.use("/api/auth", authRoutes);
 server.use("/api", dataRoutes);
 server.use("/scan", routerScan);
+server.use("/user", routerUser);
 server.use("*", routeNotFound);
 server.use(catchAll);
 

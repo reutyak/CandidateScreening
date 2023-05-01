@@ -1,0 +1,15 @@
+
+      react ="react",
+      angular ="angular",
+      net ="net",
+      frontend ="frontend",
+      deep_learning ="deep_learning",
+      algorithm ="algorithm",
+      science ="science",
+      analyst ="analyst",
+      QA ="QA",
+      css ="css",
+      typeScript ="typeScript",
+      HTML ="HTML",
+      devops ="devops",
+      Bsc ="Bsc"

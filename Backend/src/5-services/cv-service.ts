@@ -2,6 +2,7 @@ import dal from "../2-utils/dal";
 import fileHandler from "../2-utils/file-handler";
 import { ResourceNotFoundError, ValidationError } from "../4-models/client-errors";
 import { CvModel, ICvModel } from "../4-models/cv-model";
+import scanService from "./scan -service";
 
 function getAllCV():Promise<ICvModel[]> {
     return CvModel.find().exec();
@@ -28,12 +29,18 @@ async function addCV(cv: ICvModel): Promise<ICvModel> {
     cv.fileName = await fileHandler.saveFile(cv.fileContent);
 
     //save to the DB
-    const newCV = cv.save();
+    await cv.save();
 
     // read and grade a file :
-    fileHandler.readFile(cv._id, cv.fileName)
+    await fileHandler.readFile(cv._id, cv.fileName)
 
-    return newCV;
+    //get the update cv
+    const updatedCV = await getOneCV(cv._id);    
+
+    //add CV to the heap
+    scanService.addCVToThisScan(updatedCV);
+    
+    return updatedCV;
 }
 
 // Update cv score:

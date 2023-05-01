@@ -1,3 +1,24 @@
 .Home {
-	
+    height: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+}
+
+.title{
+    font-weight:600;
+}
+
+
+.Home> aside{
+    border: 1px solid;
+    grid-column: span 2;
+
+
+}
+
+.Home > main {
+    grid-column: span 4;
+    overflow: auto;
 }

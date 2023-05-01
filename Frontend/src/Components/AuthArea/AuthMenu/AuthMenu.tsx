@@ -17,6 +17,8 @@ function AuthMenu(): JSX.Element {
             setUser(store.getState().AuthState.user);
         });
 
+        store.subscribe(()=>localStorage.setItem("token",store.getState().AuthState.token))
+
     }, []);
 
     function logout(): void {

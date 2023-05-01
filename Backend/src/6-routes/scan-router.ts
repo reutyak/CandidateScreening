@@ -8,7 +8,7 @@ const routerScan = express.Router();
 routerScan.post("", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const newListKnowledge = request.body;
-        const newScan =await scanService.getNewScan(newListKnowledge);
+        const newScan = scanService.getNewScan(newListKnowledge);
         console.log(myKnowledge);
         response.json(newScan);
     }

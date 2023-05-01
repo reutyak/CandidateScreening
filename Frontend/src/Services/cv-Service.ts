@@ -2,7 +2,6 @@ import axios from "axios";
 import { cvModel } from "../Models/cv-Model";
 import appConfig from "../Utils/AppConfig";
 import { store } from "../redux/store";
-axios.defaults.headers.common['Authorization'] = `Bearer ${store.getState().AuthState.token}`;
 
 class cvService {
     public async addCV(cv:cvModel):Promise<void>{

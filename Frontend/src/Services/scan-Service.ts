@@ -3,12 +3,14 @@ import appConfig from "../Utils/AppConfig";
 import { KnowledgeModel } from "../Models/knowledge-model";
 import { cvModel } from "../Models/cv-Model";
 import { store } from "../redux/store";
-axios.defaults.headers.common['Authorization'] = `Bearer ${store.getState().AuthState.token}`;
+// axios.defaults.headers.common['Authorization'] = `Bearer ${store.getState().AuthState.token}`;
 
 class scanService {
     public async newScan(knowledge:KnowledgeModel):Promise<void>{
-        const response =await axios.post<KnowledgeModel>(appConfig.scanUrl, knowledge);
-        const updateKnowledge = response.data;
+        await axios.post<KnowledgeModel>(appConfig.scanUrl, knowledge).then((response)=>{
+        const currentToken = response.headers["authorization"];
+        localStorage.setItem("myToken", currentToken || "")});
+        // const updateKnowledge = response.data;
         
     }
     // const currentloginid = async () => {
