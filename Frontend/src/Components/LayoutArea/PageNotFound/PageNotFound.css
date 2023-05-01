@@ -1,3 +1,4 @@
-.PageNotFound {
-	
+.PageNotFound > img{
+    width: 55%;
+    height: auto;
 }

@@ -6,6 +6,7 @@ import { useState } from "react";
 import ScanService from "../../../Services/scan-Service";
 import axios from "axios";
 import { store } from "../../../redux/store";
+import notify from "../../../Utils/Notify";
 axios.defaults.headers.common['Authorization'] = `Bearer ${store.getState().AuthState.token}`;
 
 function DataList(): JSX.Element {
@@ -44,9 +45,10 @@ function DataList(): JSX.Element {
     async function send(knowledge:SkillsModel) {
         try{
             await ScanService.newScan(knowledge)
+            notify.success("Skills list successfully defined")
             navigate("/home")
         }catch(err:any){
-            alert(err.message)
+            notify.error(err.message)
         }}
     return (
         <div className="DataList">
@@ -66,7 +68,7 @@ function DataList(): JSX.Element {
           <input
             className="btn btn-primary"
             type="submit"
-            value="Scan"
+            value="Define"
           /></form>        </div>
     );
 }

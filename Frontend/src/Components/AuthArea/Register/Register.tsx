@@ -16,10 +16,10 @@ function Register(): JSX.Element {
         if (numUser < 1) {
         try{
             await authService.register(user);
-            alert("Welcome " + user.firstName);
+            notify.success("Welcome " + user.firstName);
             navigate("/home");
         }catch(err:any){
-            alert(err.message)
+            notify.error(err.message)
         }}else{notify.error("Full user quota")}
     }
     return (

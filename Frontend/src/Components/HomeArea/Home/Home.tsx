@@ -16,20 +16,20 @@ function Home(): JSX.Element {
     console.log(typeof date);
   }
   function deleteOld() {
-    try{
-    CVService.deleteOldCV(date).then(()=>notify.success(`Files uploaded before the ${date} were successfully removed from the database`));
-    }catch(err){
+    try {
+      CVService.deleteOldCV(date).then(() => notify.success(`Files uploaded before the ${date} were successfully removed from the database`));
+    } catch (err) {
       notify.error(err)
     }
   }
 
   async function show() {
-    try{
-    const myMax = await ScanService.getMax();
-    setCV(myMax);
-    }catch(err){
-        console.log(err)
-        notify.error(err)
+    try {
+      const myMax = await ScanService.getMax();
+      setCV(myMax);
+    } catch (err) {
+      console.log(err)
+      notify.error(err)
     }
   }
 

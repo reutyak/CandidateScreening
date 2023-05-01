@@ -16,7 +16,7 @@ function Add(): JSX.Element {
     try {
       cv.fileContent = (cv.fileContent as unknown as FileList)[0];
       console.log(cv);
-      const newCV = await CVService.addCV(cv).then(()=>notify.success("File loads successfully")).then(()=>navigate("/add"));
+      await CVService.addCV(cv).then(()=>notify.success("File loads successfully")).then(()=>navigate("/add"));
     } catch (err: any) {
       notify.error(err.message);
     }

@@ -12,7 +12,7 @@ class cvService {
     }
 
     public async deleteOldCV(date:string):Promise<void>{
-        const response = await axios.delete(appConfig.cvUrl+"/test/"+date)
+        await axios.delete(appConfig.cvUrl+"/test/"+date)
     }
 }
 
